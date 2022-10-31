@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Piano Keys</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- No free sounds that provided me the genuine note were available, so I wasnt able to determine which note is being played scale wise. -->
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">Note #1</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">Note #2</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">Note #3</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">Note #4</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">Note #5</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">Note #6</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">Note #7</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">Note #8</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">Note #9</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="sounds/note1.mp3"></audio>
+  <audio data-key="83" src="sounds/note2.mp3"></audio>
+  <audio data-key="68" src="sounds/note3.mp3"></audio>
+  <audio data-key="70" src="sounds/note4.mp3"></audio>
+  <audio data-key="71" src="sounds/note5.mp3"></audio>
+  <audio data-key="72" src="sounds/note6.mp3"></audio>
+  <audio data-key="74" src="sounds/note7.mp3"></audio>
+  <audio data-key="75" src="sounds/note8.mp3"></audio>
+  <audio data-key="76" src="sounds/note9.mp3"></audio>
+
+<script>
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if(!audio) return;
+    audio.currentTime = 0;
+    audio.play();
+    key.classList.add('playing');
+  }
+
+  function removeTransition(e) {
+    if(e.propertyName !== 'transform') return;
+    this.classList.remove('playing');
+  }
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+  window.addEventListener('keydown', playSound);
+
+</script>
+
+
+</body>
+</html>
